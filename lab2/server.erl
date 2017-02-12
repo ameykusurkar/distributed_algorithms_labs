@@ -7,13 +7,13 @@
  
 start() ->  
   receive 
-    {bind, C} -> next(C) 
+    {bind} -> next()
   end.
  
-next(C) ->
+next() ->
   receive
-    {circle, Radius} ->  C ! {result, 3.14159 * Radius * Radius};
-    {square, Side}   ->  C ! {result, Side * Side}
+    {circle, Radius, C} ->  C ! {result, 3.14159 * Radius * Radius};
+    {square, Side, C}   ->  C ! {result, Side * Side}
   end,
-  next(C).
+  next().
 

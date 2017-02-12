@@ -8,9 +8,8 @@
 -export([start/0]).
  
 start() ->  
-  C  = spawn(client, start, []),
   S  = spawn(server, start, []),
-  
-  C  ! {bind, S},
-  S  ! {bind, C}.
+  S  ! {bind},
+  N = 10,
+  [spawn(client, start, []) ! {bind, S} || _ <- lists:seq(1, N)].
 

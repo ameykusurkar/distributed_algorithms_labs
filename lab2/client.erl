@@ -4,18 +4,21 @@
 
 -module(client).
 -export([start/0]).
- 
+
 start() -> 
   receive 
-    {bind, S} -> next(S) 
+    {bind, S} -> next(S)
   end.
  
 next(S) ->
-  S ! {circle, 1.0},
+  case rand:uniform(2) == 1 of
+    true  -> S ! {circle, 1.0, self()};
+    false -> S ! {square, 1.0, self()}
+  end,
   receive 
     {result, Area} -> 
-      io:format("Area is ~p~n", [Area]) 
+      io:format("Area is ~p, Process: ~p~n", [Area, self()]) 
   end,
-  timer:sleep(1000),      % pause one second before next request
+  timer:sleep(rand:uniform(10) * 1000), % pause randomly between 1-10 seconds before next request
   next(S).
 
