@@ -1,2 +1,4 @@
 ebin
 *.sw*
+*.beam
+*.dump
