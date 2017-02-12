@@ -14,7 +14,7 @@ next(Neighbours, N) ->
         _Else -> skip
       end,
       next(Neighbours, N+1) 
-  after 1 ->
+  after 1000 ->
     io:format("Peer: ~p Messages seen: ~p~n", [self(), N])
   end.
 
